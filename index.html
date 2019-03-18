@@ -1,0 +1,143 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  
+
+
+  <link href="/stylesheets/normalize.css" rel="stylesheet" /><link href="/stylesheets/main.css" rel="stylesheet" /><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" /><link href="/stylesheets/fonttelogis.css" rel="stylesheet" />
+
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+  <link href="/stylesheets/bootstrap/scss/bootstrap.css" rel="stylesheet" />
+
+  <!-- %= stylesheet_link_tag "grid.css" %> -->
+  
+  
+</head>
+
+<body data-bind="css: {'hide-sidebar': hideSidebar}, style: {'--sidebar-width': sidebarWidth}, event: {keydown: bodyKeyDown}">
+
+  <header class="global-header">
+    <div class="app-logo">
+      <img src="/images/vzc.svg" alt="Vzc" />
+    </div>
+
+    <div class="global-toolbar">
+        <div class="global-toolbar__section">
+          <span class="ico_time"></span> Mon, Mar 4, 4:03 AM
+        </div>
+
+        <div class="global-toolbar__section">
+          <span class="ico_message"></span> (0) Messsages
+        </div>
+
+        <div class="global-toolbar__section">
+          <span class="ico_user"></span> uxdemo2:guest <span class="ico_chevron-down"</span>
+        </div>
+    </div>
+  </header>
+
+  <div class="sidebar">
+
+    <section class="find sidebar__top">
+      <input type="search" class="find-field"
+          placeholder="Find"
+          data-bind="hasFocus: findFieldHasFocus, textInput: findFieldValue, event: {keydown: findKeyDown}"
+          data-toggle="tooltip" data-placement="bottom" title="Find in menu (⌘ + K)"
+          >
+    </section>
+
+    <section class="primary-nav sidebar__main" data-bind="visible: showFind">
+      <div class="primary-nav-group">
+        <div class="primary-nav-group__summary"><h2 class="primary-nav-group-title">All</h2></div>
+        <ul class="primary-nav-menu" data-bind="foreach: navitems">
+            <li class="primary-nav-menu__item">
+              <a href="#" class="primary-nav-link"
+                data-bind="css: {'primary-nav-link--highlighted': $data == $root.highlightedItem()}">
+                <span data-bind="html: title, click: $root.setActiveTab" class="primary-nav-link__label  primary-nav-link__label--noindent" ></span>
+                <input type="checkbox" data-bind="checkedValue: $data, checked: $root.favorites" class="checkbox--favorite">
+              </a>
+            </li>
+        </ul>
+      </div>
+    </section>
+  
+    <section class="primary-nav  sidebar__main" data-bind="visible: !showFind()">
+
+      <details class="primary-nav-group primary-nav-group--favorites" open>
+        <summary class="primary-nav-group__summary"><h2 class="primary-nav-group-title">Favorites</h2></summary>
+        <ul class="primary-nav-menu" data-bind="foreach: favorites">
+          <li class="primary-nav-menu__item"><a href="#" class="primary-nav-link" data-bind="css: {'primary-nav-link--active': $data == $root.activeTab()}"><span data-bind="html: title, click: $root.setActiveTab" class="primary-nav-link__label"></span><input type="checkbox" data-bind="checkedValue: $data, checked: $root.favorites" class="checkbox--favorite"></a></li>
+        </ul> 
+
+        <div data-bind="ifnot: favorites().length" class="empty">
+          <div class="material-icons">star_border</div>
+          <p>Keep your frequently used items&nbsp;here.</p>
+        </div>
+      </details>
+
+
+      <!-- ko foreach: { data: primarynav, as: 'group'} -->
+      <details class="primary-nav-group" data-bind="attr: { open: open}">
+        <summary class="primary-nav-group__summary"><h2 class="primary-nav-group-title" data-bind="html: title">Main</h2></summary>
+        <ul class="primary-nav-menu" data-bind="foreach: group.items">
+          <li class="primary-nav-menu__item"><a href="#" class="primary-nav-link" data-bind="attr: {title: title}, css: {'primary-nav-link--active': $data == $root.activeTab()}"><span data-bind="html: title, click: $root.setActiveTab" class="primary-nav-link__label" ></span><input type="checkbox" data-bind="checkedValue: $data, checked: $root.favorites" class="checkbox--favorite"></a></li>
+        </ul> 
+      </details>
+      <!-- /ko -->
+
+    </div>
+
+  </div>
+
+  <div class="sidebar-handle" data-bind="event: {mousedown: gripperdown} ">
+    <div class="sidebar-handle__gripper" data-bind="click: toggleSideBar"></div>
+  </div>
+
+  <main class="main">
+    <div class="tabs" data-bind="foreach: tabs">
+      <div class="tab" data-bind="css: {'tab--active': $data == $root.activeTab()},  click: $root.setActiveTab">
+        <span class="tab__icon" data-bind="class: icon"></span>
+        <span class="tab__label" data-bind="html: title"></span>
+        <span class="tab__close" data-bind="click: $root.closeTab">close</span>
+      </div>
+    </div>
+
+    <section class="content" data-bind="with: activeTab">
+      <header class="content__header">
+        <h1 class="content__header__title" data-bind="text: title"></h1>
+      </header>
+
+    </section>
+  
+  </main>
+
+  <script src="/javascripts/vendor/modernizr-3.6.0.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+  <script src="/javascripts/plugins.js"></script><script src="/javascripts/vendor/underscore.js"></script>
+
+  <script src="/javascripts/vendor/knockout-3.5.0rc2.js"></script><script src="/javascripts/ko/viewmodel.js"></script><script src="/javascripts/ko.js"></script>
+  
+  
+  
+
+
+</body>
+
+</html>
