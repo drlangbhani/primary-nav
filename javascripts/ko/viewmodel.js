@@ -182,7 +182,7 @@ function viewModel() {
 
 	
 
-	$.getJSON("/javascripts/ko/data/uxdemo2.json", function(data) { 
+	$.getJSON("javascripts/ko/data/uxdemo2.json", function(data) { 
 		// Now use this data to update your view models, 
 		// and Knockout will update your UI automatically 
 		
