@@ -52,7 +52,7 @@
     <section class="find sidebar__top">
       <input type="search" class="find-field"
           placeholder="Find"
-          data-bind="hasFocus: findFieldHasFocus, textInput: findFieldValue, event: {keydown: findKeyDown}"
+          data-bind="hasFocus: findFieldHasFocus, textInput: findFieldValue, event: {keydown: findKeyDown}, click: function(){return true}, clickBubble: false"
           data-toggle="tooltip" data-placement="bottom" title="Find in menu (⌘ + K)"
           >
     </section>
@@ -80,10 +80,12 @@
           <li class="primary-nav-menu__item"><a href="#" class="primary-nav-link" data-bind="css: {'primary-nav-link--active': $data == $root.activeTab()}"><span data-bind="html: title, click: $root.setActiveTab" class="primary-nav-link__label"></span><input type="checkbox" data-bind="checkedValue: $data, checked: $root.favorites" class="checkbox--favorite"></a></li>
         </ul> 
 
-        <div data-bind="ifnot: favorites().length" class="empty">
+        <!-- ko ifnot: favorites().length -->
+        <div class="empty">
           <div class="material-icons">star_border</div>
           <p>Keep your frequently used items&nbsp;here.</p>
         </div>
+        <!-- /ko -->
       </details>
 
 
@@ -115,7 +117,7 @@
 
     <section class="content" data-bind="with: activeTab">
       <header class="content__header">
-        <h1 class="content__header__title" data-bind="text: title"></h1>
+        <h1 class="content__header__title" data-bind="html: title"></h1>
       </header>
 
     </section>

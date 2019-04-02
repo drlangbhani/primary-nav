@@ -20,10 +20,10 @@ function viewModel() {
 
 	self.showFind = 	ko.computed({
 		read: function(){
-			self._showFind( self._showFind() || self.findFieldHasFocus() );
+			self._showFind( self._showFind() || self.findFieldHasFocus() );			
 			return self._showFind();
 		},
-		write: function(val){
+		write: function(val){			
 			self._showFind(val);
 		}
 	})
@@ -172,9 +172,6 @@ function viewModel() {
 	}
 
 	self.hideFind = function(data, event){
-
-		console.log(event);
-
 		self.findFieldValue(undefined);
 		self.findFieldHasFocus(false);
 		self.showFind(false);

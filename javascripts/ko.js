@@ -13,5 +13,9 @@ $( function(){
 	});
 		 
 	
+	$("body").on("click", function(e){
+			console.log("Body", "click");
+			vm.hideFind();
+		});
 	
 });
